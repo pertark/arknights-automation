@@ -1,0 +1,49 @@
+{
+	"news-x": [96, 8],
+	"back": [7,5],
+	"main_screen": {
+		"combat": [75,25],
+		"recruit": [80,70],
+		"store": [66,66],
+		"mission": [63,83],
+		"base": [80,87]
+	},
+	"combat": {
+		"main": [6,90],
+		"supplies": [18,90],
+		"chips": [30,90],
+		"annihilation": [42,90],
+		"event": [54,90]
+	},
+	"chips": [
+		[20,50],
+		[40,50],
+		[60,50],
+		[80,50]
+	],
+	"supplies": [
+		[15,50],
+		[35,50],
+		[57,50],
+		[78,50],
+		[96,50]
+	],
+	"annihilation": {
+		"1": [16,40],
+		"2": [60,75],
+		"3": [85,45]
+	},
+	"base": {
+		"warning1": [96, 13],
+		"warning2": [96, 20],
+		"backlog": [20,96],
+		"reception_room": [78,95,28,37],
+		"reception_room_enter": [0,40,74,100],
+		"rr_daily_clue": [],
+		"rr_receive": [],
+		"rr_send": [],
+		"overview": [1,18,12,20],
+		"exit_out_alert": [1,46,10,36]
+	}
+	
+}
