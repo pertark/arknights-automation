@@ -6,7 +6,9 @@ from PIL import Image
 pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 
 
-def extract_text(img) -> str:
+def extract_text(img, config=None) -> str:
+    if config:
+        return pytesseract.image_to_string(Image.fromarray(img), lang='eng', config=config).rstrip()
     return pytesseract.image_to_string(Image.fromarray(img), lang='eng').rstrip()
 
 
@@ -14,6 +16,7 @@ def simple_box_identification(img, ret_type='image', min_area=1000, max_area=Non
     # when the image is really easy to identify buttons in
     # ret options are 'image' and 'contour'
     # super jank
+    # returns in format [(img, coords), (img, coords)]
     if type(img) == str:
         img = cv2.imread(img)
     if type(img) != np.ndarray:

@@ -7,7 +7,6 @@ import random
 import json
 import pytesseract
 from PIL import Image
-from math import ceil, floor
 
 
 class Device:
@@ -111,15 +110,16 @@ class Bluestacks(Device):
     # application = r'C:\Program Files\BlueStacks\Bluestacks.exe'
     application = r"C:\Program Files\BlueStacks_bgp64_hyperv\Bluestacks.exe"
 
-    def __init__(self, adbkey, process=None, launch=True, port=5555):
+    def __init__(self, adbkey, launch=True, port=5555):
         if launch:
             self.start_bluestacks()
 
         # connect to bluestacks
         super().__init__(adbkey=adbkey, timeout=20, port=port)
 
-        if launch:
-            self.launch(process)
+        # take coords
+        with open('coords.json') as f:
+            self.coords = json.load(f)
 
     # general methods
     def start_bluestacks(self):
@@ -133,8 +133,8 @@ class Bluestacks(Device):
 
     def bluestacks_tap_rect(self, x1, x2, y1, y2):
         return self.tap(
-            self.x*random.uniform(x1, x2)//100,
-            self.y*random.uniform(y1, y2)//100
+            self.x*random.randrange(x1, x2)//100,
+            self.y*random.randrange(y1, y2)//100
         )
 
     def wait_for_tesseract(self, text, interval=1, verbose=False):
@@ -166,6 +166,3 @@ class Bluestacks(Device):
         if verbose:
             print(text)
         return text
-
-
-Arknights = Bluestacks(adbkey=r"C:\Users\patri\.android\adbkey", process='com.YoStarEN.Arknights', launch=True, port=8320)
