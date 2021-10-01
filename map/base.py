@@ -3,7 +3,7 @@ from Device import Arknights
 from calibrate import calibrate_location
 import json
 
-NAME = "Tactical Drill"
+NAME = "base"
 
 with open('coords.json') as f:
     coords = json.load(f)
@@ -11,13 +11,15 @@ if NAME not in coords.keys():
     coords = calibrate_location(NAME)
 
 
-def to():
+def go():
     Arknights.bluestacks_tap_rect(*coords[NAME])
-    Arknights.wait_for_changes(threshold=1000)
+    Arknights.wait_for_changes(threshold=0, interval=0.5)
+    Arknights.detect_change_jpeg()
 
 
-def back():
+def to():
     Arknights.back()
 
 
-stage1 = ArknightsCoords(NAME, to, back)
+base = ArknightsCoords(NAME, go, to)
+

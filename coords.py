@@ -5,10 +5,12 @@ class CoordsNode:
         self.from_parent = from_parent
         self.return_to_parent = to_parent
         self.action = action
+        self.parent = None
 
     def add_node(self, node):
         name = node.name
         self.nodes[name] = node
+        node.parent = self
 
     def navigate_to(self, destination: str):
         if destination == self.name:
@@ -20,6 +22,12 @@ class CoordsNode:
 
         # destination not in child nodes
         raise Exception("Target node not a child of this node")
+
+    def return_to_root(self):
+        if self.parent is None:
+            return self
+        self.return_to_parent()
+        return self.parent.return_to_root()
 
     def return_all_nodes(self):
         ret = [node.return_all_nodes() for node in self.nodes.values()]

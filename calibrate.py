@@ -1,7 +1,9 @@
 import json
-from Device import Arknights
+from Device import Arknights as arknights
 import cv2
+from port import PORT
 
+Arknights = arknights(port=PORT, launch=False)
 
 def write_coords(func):
     def wrapper(*args, **kwargs):

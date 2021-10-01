@@ -96,6 +96,30 @@ class Device:
             print('All changes are over.\n')
         return img
 
+    def compare_to(self, img='.cache/temp.jpg', threshold=0, interval=1, crop=None, verbose=False, timeout=-1):
+        if verbose:
+            print(f"Comparing to {img}...")
+        curr_size = os.path.getsize(img)
+        while True:
+            img = self.screenshot()
+            if crop:
+                # x1 x2 y1 y2 format TODO: MAKE ALL COORD SYSTEMS THE SAME BECAUSE ANFKLDSNFKLASDNFKNSDFNASDAFSN
+                x1, x2, y1, y2 = crop
+                img = img[self.y*y1//100:self.y*y2//100, self.x*x1//100:self.x*x2//100]
+            cv2.imwrite('.cache/temp.jpg', img)
+            temp_size = os.path.getsize('.cache/temp.jpg')
+            diff = abs(curr_size - temp_size)
+            if verbose:
+                print(f'JPEG difference: {diff}')
+            if diff <= threshold:
+                break
+            time.sleep(interval)
+            if timeout != -1 and time.monotonic() - start > timeout:
+                raise Exception('ree')
+        if verbose:
+            print('All changes are over.\n')
+        return img
+    
     def extract_text(img, config=None) -> str:
         if config:
             return pytesseract.image_to_string(Image.fromarray(img), lang='eng', config=config).rstrip()
@@ -168,4 +192,4 @@ class Bluestacks(Device):
         return text
 
 
-Arknights = Bluestacks(adbkey=r"C:\Users\patri\.android\adbkey", process='com.YoStarEN.Arknights', launch=True, port=8320)
+Arknights = lambda port, launch=False: Bluestacks(adbkey=r"C:\Users\patri\.android\adbkey", process='com.YoStarEN.Arknights', launch=launch, port=port)
